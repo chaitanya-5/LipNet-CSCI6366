@@ -1,3 +1,5 @@
+import tensorflow as tf
+
 class CustomLoss:
     @staticmethod
     def ctc_loss(y_true, y_pred):
