@@ -1,5 +1,3 @@
-from tensorflow.keras.callbacks import ModelCheckpoint, LearningRateScheduler
-
 class ModelTrainer:
     def __init__(self, model, loss_fn, optimizer="adam"):
         """
@@ -14,6 +12,7 @@ class ModelTrainer:
         self.loss_fn = loss_fn
         self.optimizer = tf.keras.optimizers.get(optimizer)
         self.callbacks = []
+        self.trained = False
 
     def compile_model(self):
         """
@@ -50,4 +49,19 @@ class ModelTrainer:
             batch_size=batch_size,
             callbacks=self.callbacks,
         )
+        self.trained = True
         return history
+    
+    def predict(self, inputs):
+        """
+        Makes predictions using the trained model.
+
+        Args:
+            inputs (tf.Tensor or np.ndarray): Preprocessed inputs for prediction.
+
+        Returns:
+            np.ndarray: Predictions from the model.
+        """
+        if not self.trained:
+            raise ValueError("The model has not been trained yet.")
+        return self.model.predict(inputs)
