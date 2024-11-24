@@ -1,5 +1,6 @@
 import tensorflow as tf
-import os
+from tensorflow.keras.layers import StringLookup
+
 
 class GenerateSamples(tf.keras.callbacks.Callback):
     def __init__(self, dataset, vocab):
@@ -16,11 +17,14 @@ class GenerateSamples(tf.keras.callbacks.Callback):
     def on_epoch_end(self, epoch, logs=None):
         data = self.dataset.next()
         pred = self.model.predict(data[0])
+
+        numToChar = StringLookup(vocabulary=self.vocab, oov_token="", invert=True)
         
-        decoded = tf.keras.backend.ctc_decode(pred, [75] * tf.shape(pred)[0], greedy=False)[0][0].numpy()
+        decoded = tf.keras.backend.ctc_decode(pred, [75] * pred.shape[0], greedy=False)[0][0].numpy()
         for x in range(len(pred)):
-            original = "".join([self.vocab[char] for char in data[1][x] if char != -1])
-            prediction = "".join([self.vocab[char] for char in decoded[x] if char != -1])
+            original = "".join([a.decode('UTF-8') for a in numToChar(data[1][x]).numpy()])
+            prediction = "".join([numToChar(char).numpy().decode('UTF-8') for char in decoded[x] if char != -1])
+
 
             print(f"Original: {original}")
             print(f"Prediction: {prediction}")
