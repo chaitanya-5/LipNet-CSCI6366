@@ -17,7 +17,7 @@ class FrameExtractor:
         Extracts frames from a video file at a specified frame rate.
 
         Args:
-            file_path (str): Path to the video file.
+            file_path (tf.Tensor or str): Path to the video file.
             frame_rate (int, optional): Frequency of frames to extract. Defaults to 1 (extract every frame).
 
         Returns:
@@ -28,6 +28,10 @@ class FrameExtractor:
             ValueError: If no frames are extracted from the video.
         """
         frames = []  # List to store extracted frames
+
+        # Convert tf.Tensor to string if necessary
+        if isinstance(file_path, tf.Tensor):
+          file_path = file_path.numpy().decode("utf-8")
 
         # Open the video file
         cap = cv2.VideoCapture(file_path)
