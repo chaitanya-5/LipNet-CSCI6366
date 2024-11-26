@@ -1,3 +1,5 @@
+import tensorflow as tf
+
 class ModelTrainer:
     def __init__(self, model, loss_fn, optimizer="adam"):
         """

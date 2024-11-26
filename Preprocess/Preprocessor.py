@@ -1,6 +1,7 @@
-from Dataset import VideoDatasetManager
-from AlignFileProcessor import AlignFileProcessor
-from FrameExtractor import FrameExtractor 
+from .Dataset import VideoDatasetManager
+from .AlignFileProcessor import AlignFileProcessor
+from .FrameExtractor import FrameExtractor 
+import tensorflow as tf
 
 class Preprocessor:
     def __init__(self, video_dir, align_dir, frame_slice=None, vocab=None):
@@ -75,6 +76,10 @@ class Preprocessor:
             # Use tf.py_function to call Python methods inside a TensorFlow map
             video_frames = tf.py_function(self.preprocess_video, [video_path], tf.float32)
             align_data = tf.py_function(self.preprocess_align, [align_path], tf.int64)
+
+            video_frames.set_shape([None, 46, 140, 1])
+            align_data.set_shape([40])
+            
             return video_frames, align_data
 
         dataset = dataset.map(preprocess_element)
