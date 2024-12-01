@@ -1,7 +1,7 @@
 import tensorflow as tf
 
 class ModelTrainer:
-    def __init__(self, model, loss_fn, optimizer="adam"):
+    def __init__(self, model, loss_fn, optimizer="adam", learning_rate=0.0001):
         """
         Initializes the ModelTrainer with the model, loss function, and optimizer.
 
@@ -13,6 +13,7 @@ class ModelTrainer:
         self.model = model
         self.loss_fn = loss_fn
         self.optimizer = tf.keras.optimizers.get(optimizer)
+        self.optimizer.learning_rate = learning_rate
         self.callbacks = []
         self.trained = False
 
