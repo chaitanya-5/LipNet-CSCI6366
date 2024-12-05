@@ -76,14 +76,44 @@ python train.py --root-dir /path/to/root --videos-path /path/to/videos --align-p
 - Replace `/path/to/root`, `/path/to/videos`, and `/path/to/aligns` with the appropriate paths to your data.
 - Adjust the `frame-slice`, `batch-size`, and `epochs` values based on your training preferences.
 
-### Explanation of Arguments
+## Testing the Trained Model with the Streamlit App
 
-- `--root-dir`: The root directory that contains the `Videos` and `Aligns` folders. This is a required argument.
-- `--videos-path`: The path to the folder containing video files. Defaults to `<root-dir>/Videos` if not provided.
-- `--align-path`: The path to the folder containing alignment files. Defaults to `<root-dir>/Aligns` if not provided.
-- `--frame-slice`: Specifies the slice for cropping the video frames. The format is `start:end` for rows, columns, and channels (e.g., `"190:236,80:220,:"`). Defaults to `"190:236,80:220,:"`.
-- `--shuffle`: Whether to shuffle the dataset during training. Defaults to `True`.
-- `--cache`: Whether to cache the dataset in memory. Defaults to `True`.
-- `--batch-size`: Batch size used during training. Defaults to `2`.
-- `--epochs`: The number of epochs for training. Defaults to `100`.
-- `--model-save-dir`: Directory where model weights will be saved. Defaults to `./Model/`.
+Once the model is trained, you can test it on video files using the interactive Streamlit app included in this repository. The app provides a user-friendly interface for uploading videos, running predictions, and visualizing results.
+
+### Running the Streamlit App
+
+The Streamlit app is located in the `StreamlitApp` directory. To run the app:
+
+1. **Ensure Trained Weights Are Available**:  
+   - The trained weights should be placed in the `StreamlitApp/Weights` directory.  
+   - If you want to use a different path for the weights, update the `weights_path` in the `StreamlitApp/util.py` file:
+     ```python
+     def load_model(weights_path= os.path.join(os.getcwd(), 'StreamlitApp', 'Weights', 'checkpoints.weights.h5')):
+     ```
+
+2. **Run the App**:  
+   From the root directory of the repository, execute the following command:
+   ```bash
+   python3 -m streamlit run StreamlitApp/app.py
+   ```
+
+3. **Access the App**:  
+   After running the command, Streamlit will display a link in the terminal, such as:
+   ```
+   Local URL: http://localhost:8501
+   Network URL: http://<your-ip>:8501
+   ```
+   Open the link in your web browser to interact with the app.
+
+### Using the App
+
+1. **Upload a Video**:  
+   - Use the file uploader in the app to upload a `.mpg` video file.  
+   - The app will process the video and convert it to `.mp4` format for display.
+
+2. **Generate Predictions**:  
+   - After uploading the video, click the "Generate Predictions" button.  
+   - The app will use the trained model to predict the text corresponding to the lip movements in the video.
+
+3. **View Results**:  
+   - The app will display the predictions alongside the uploaded video for easy comparison.
