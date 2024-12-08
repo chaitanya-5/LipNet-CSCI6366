@@ -119,3 +119,29 @@ def make_predictions(frames):
     except Exception as e:
         # Raise an error if there's a failure in making predictions
         raise ValueError(f"Error making predictions: {e}")
+    
+# Function to read the align file.
+def read_align_file(file_path):
+    """
+    Reads an align file and extracts the third word from each line, 
+    excluding lines where the third word is 'sil'.
+
+    Args:
+        file_path (str): Path to the align file.
+
+    Returns:
+        str: Processed text with silence parts removed.
+    """
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+        
+        # Extract the third word from each line if it's not 'sil'
+        cleaned_text = " ".join(
+            line.split()[2] for line in lines if len(line.split()) >= 3 and line.split()[2] != "sil"
+        )
+        return cleaned_text.strip()
+    except FileNotFoundError:
+        return "Error: File not found."
+    except Exception as e:
+        return f"Error: {e}"
