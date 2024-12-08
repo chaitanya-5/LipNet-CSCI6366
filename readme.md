@@ -40,6 +40,7 @@ This repository contains our implementation of the LipNet model, designed for en
 ## File Structure
 
 - `train.py`: Script for training the LipNet model.
+- `Sample_Model_Prediction.ipynb`: Contains a sample prediction generated using the model trained for 100 epochs.
 - `Preprocess/`: Contains the preprocessing pipeline for the video data.
 - `Model/`: Contains the model architecture and training logic.
 - `Callbacks/`: Contains callbacks for training, such as learning rate schedulers and sample generation.
