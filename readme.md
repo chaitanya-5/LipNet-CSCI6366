@@ -90,6 +90,9 @@ The Streamlit app is located in the `StreamlitApp` directory. To run the app:
      ```python
      def load_model(weights_path= os.path.join(os.getcwd(), 'StreamlitApp', 'Weights', 'checkpoints.weights.h5')):
      ```
+You can download the trained weights for 100 epochs from the link below:
+
+   - [Download Trained Weights](https://drive.google.com/file/d/1MGZXcl4gkZkDZJcOv5xvk1NGgap6jPHT/view?usp=share_link)
 
 2. **Run the App**:  
    From the root directory of the repository, execute the following command:
